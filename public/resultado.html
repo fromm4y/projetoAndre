@@ -4,84 +4,146 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Resultado - Exploração do Oceano</title>
+
   <style>
-    :root{
-      --bg: #1b1ff7;
+   :root{
+      --bg-1:#003d66;
+      --bg-2:#0099cc;
       --card:#04293A;
       --accent:#0ABDE3;
       --muted:#9FB4C7;
       --light:#E6F7FF;
-      --glass: rgba(255,255,255,0.03);
+      --glass: rgba(255,255,255,0.04);
       --radius:16px;
       --max-width:1100px;
       --transition:300ms cubic-bezier(.2,.9,.3,1);
       color-scheme: dark;
-    }
+   }
 
-    .light {
-      --bg:#E9F6FB;
-      --card:#FFFFFF;
-      --accent:#0B7285;
-      --muted:#355070;
-      --light:#06283D;
-      --glass: rgba(0,0,0,0.04);
-      color-scheme: light;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html, body {
+   /* ================================
+      FUNDO + DEGRADE SUPER SUAVE
+   ================================= */
+   html, body {
       height: 100%;
       margin: 0;
+      overflow-x: hidden;
       font-family: 'Arial', sans-serif;
-      background: linear-gradient(180deg, var(--bg), #012329 120%);
+
+      background: linear-gradient(
+        to bottom,
+        #003d66 0%,
+        #004468 10%,
+        #00567a 25%,
+        #006e96 45%,
+        #0080aa 65%,
+        #0090bf 82%,
+        #0099cc 100%
+      );
+
       color: var(--light);
       display: flex;
       justify-content: center;
       padding: 24px;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      line-height: 1.35;
-    }
+      box-sizing: border-box;
+   }
 
-    .wrap {
+   /* ================================
+      ÁGUA + BOLHAS
+   ================================= */
+   .efeito-agua {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: -1;
+   }
+
+   /* luz suave subindo */
+   .efeito-agua::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top,
+        rgba(200, 230, 255, 0.18),
+        rgba(255, 255, 255, 0)
+      );
+      animation: ondinha 6s ease-in-out infinite alternate;
+   }
+
+   @keyframes ondinha {
+      0% { transform: translateY(5px); }
+      100% { transform: translateY(-5px); }
+   }
+
+   /* bolhas subindo */
+   .bolha {
+      position: absolute;
+      bottom: -140px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: subirBolha linear infinite;
+      filter: blur(1px);
+   }
+
+   @keyframes subirBolha {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.5;
+      }
+      50% { opacity: 0.85; }
+      100% {
+        transform: translateY(-120vh) scale(1.4);
+        opacity: 0;
+      }
+   }
+
+   /* ================================
+      CONTEÚDO
+   ================================= */
+   .wrap {
       width: 100%;
       max-width: var(--max-width);
-    }
+      text-align: center;
+   }
 
-    h1 {
+   h1 {
       font-size: 2rem;
       color: var(--accent);
-    }
+      margin-bottom: 8px;
+   }
 
-    h2 {
-      margin: 8px 0;
-    }
+   h2 { margin: 8px 0; }
 
-    p {
+   p {
       font-size: 1.2rem;
       margin-top: 0;
       color: var(--muted);
-    }
+   }
 
-    .card {
+   /* ================================
+      CARD AJUSTADO (SEM SCROLL)
+   ================================= */
+   .card {
       background: var(--card);
       padding: 20px;
       border-radius: var(--radius);
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
       text-align: center;
-    }
+      margin-top: 16px;
+   }
 
-    .card img {
-      max-width: 350px;
+   .card img {
+      width: 100%;
+      max-width: 360px;
+      height: auto;
+      display: block;
       border-radius: 12px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-    }
+      margin: 0 auto 20px auto;
+      box-sizing: border-box;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+   }
 
-    button {
+   button {
       padding: 12px 22px;
       background: var(--accent);
       border: none;
@@ -90,32 +152,31 @@
       font-weight: bold;
       cursor: pointer;
       font-size: 1rem;
-      transition: background 0.3s ease;
-    }
+   }
 
-    button:hover {
+   button:hover {
       background: #0093ba;
-    }
+   }
 
-    .back-btn {
-      margin-top: 20px;
-      padding: 12px 22px;
+   .back-btn {
+      margin-top: 12px;
       background: transparent;
       color: var(--accent);
       border: 2px solid var(--accent);
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-    }
+   }
 
-    .back-btn:hover {
+   .back-btn:hover {
       background: var(--accent);
       color: var(--light);
-    }
-
+   }
   </style>
 </head>
+
 <body>
+
+  <!-- CAMADA DE ÁGUA + BOLHAS -->
+  <div class="efeito-agua" id="efeitoAgua"></div>
+
   <div class="wrap">
     <h1>🌊 Emoção detectada:</h1>
     <h2 id="emocaoTitle">Processando...</h2>
@@ -128,18 +189,76 @@
   </div>
 
   <script>
+    /* ==================================
+       IMAGENS POR EMOÇÃO
+    =================================== */
     const imagensPorEmocao = {
-      feliz: [
+        feliz: [
         'static/mar_feliz/1.png',
-        'static/mar_feliz/2.png'
-      ],
+        'static/mar_feliz/2.png',
+        'static/mar_feliz/3.png',
+        'static/mar_feliz/4.png',
+        'static/mar_feliz/5.png',
+        'static/mar_feliz/6.png',
+        'static/mar_feliz/7.png',
+        'static/mar_feliz/8.png',
+        'static/mar_feliz/9.png',
+        'static/mar_feliz/10.png',
+        'static/mar_feliz/11.png',
+        'static/mar_feliz/12.png',
+        'static/mar_feliz/13.png',
+        'static/mar_feliz/14.png',
+        'static/mar_feliz/15.png',
+        'static/mar_feliz/16.png',
+        'static/mar_feliz/17.png',
+        'static/mar_feliz/18.png',
+        'static/mar_feliz/19.png',
+        'static/mar_feliz/20.png'
+   ],
       triste: [
+        'static/mar_triste/1.png',
+        'static/mar_triste/2.png',
         'static/mar_triste/3.png',
-        'static/mar_triste/4.png'
+        'static/mar_triste/4.png',
+        'static/mar_triste/5.png',
+        'static/mar_triste/6.png',
+        'static/mar_triste/7.png',
+        'static/mar_triste/8.png',
+        'static/mar_triste/9.png',
+        'static/mar_triste/10.png',
+        'static/mar_triste/11.png',
+        'static/mar_triste/12.png',
+        'static/mar_triste/13.png',
+        'static/mar_triste/14.png',
+        'static/mar_triste/15.png',
+        'static/mar_triste/16.png',
+        'static/mar_triste/17.png',
+        'static/mar_triste/18.png',
+        'static/mar_triste/19.png',
+        'static/mar_triste/20.png'
+    
       ],
       neutro: [
+        'static/mar_neutro/1.png',
+        'static/mar_neutro/2.png',
+        'static/mar_neutro/3.png',
+        'static/mar_neutro/4.png',
         'static/mar_neutro/5.png',
-        'static/mar_neutro/6.png'
+        'static/mar_neutro/6.png',
+        'static/mar_neutro/7.png',
+        'static/mar_neutro/8.png',
+        'static/mar_neutro/9.png',
+        'static/mar_neutro/10.png',
+        'static/mar_neutro/11.png',
+        'static/mar_neutro/12.png',
+        'static/mar_neutro/13.png',
+        'static/mar_neutro/14.png',
+        'static/mar_neutro/15.png',
+        'static/mar_neutro/16.png',
+        'static/mar_neutro/17.png',
+        'static/mar_neutro/18.png',
+        'static/mar_neutro/19.png',
+        'static/mar_neutro/20.png'
       ]
     };
 
@@ -154,8 +273,7 @@
     };
 
     function getQueryParam(name) {
-      const params = new URLSearchParams(window.location.search);
-      return params.get(name);
+      return new URLSearchParams(window.location.search).get(name);
     }
 
     function imagemAleatoria(lista) {
@@ -166,18 +284,45 @@
     const conf = getQueryParam('conf') || '0';
     const emocaoTraduzida = traducoes[emocaoOriginal] || 'nenhuma';
 
-    document.getElementById('emocaoTitle').innerText = emocaoTraduzida.charAt(0).toUpperCase() + emocaoTraduzida.slice(1);
-    document.getElementById('confTitle').innerText = `Confiança: ${conf}%`;
+    document.getElementById('emocaoTitle').innerText =
+      emocaoTraduzida.charAt(0).toUpperCase() + emocaoTraduzida.slice(1);
 
-    if (imagensPorEmocao[emocaoTraduzida] && imagensPorEmocao[emocaoTraduzida].length > 0) {
-      document.getElementById('imagemEmocao').src = imagemAleatoria(imagensPorEmocao[emocaoTraduzida]);
-    } else {
-      document.getElementById('imagemEmocao').style.display = 'none';
+    document.getElementById('confTitle').innerText =
+      `Confiança: ${conf}%`;
+
+    if (imagensPorEmocao[emocaoTraduzida]) {
+      document.getElementById('imagemEmocao').src =
+        imagemAleatoria(imagensPorEmocao[emocaoTraduzida]);
     }
 
     function voltar() {
       window.location.href = 'index.html';
     }
+
+    /* ==================================
+       GERAR BOLHAS
+    =================================== */
+    const container = document.getElementById("efeitoAgua");
+
+    function criarBolha() {
+      const bolha = document.createElement("div");
+      bolha.classList.add("bolha");
+
+      const size = Math.random() * 40 + 10;
+      const pos = Math.random() * 100;
+
+      bolha.style.width = size + "px";
+      bolha.style.height = size + "px";
+      bolha.style.left = pos + "vw";
+      bolha.style.animationDuration = (Math.random() * 6 + 4) + "s";
+
+      container.appendChild(bolha);
+
+      setTimeout(() => bolha.remove(), 10000);
+    }
+
+    setInterval(criarBolha, 600);
   </script>
+
 </body>
 </html>
