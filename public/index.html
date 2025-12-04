@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Mistérios das Profundezas — um site educativo sobre o fundo do mar: curiosidades, fatos científicos, galeria e perguntas frequentes." />
+  <title>Mistérios das Profundezas — Tritões da Garra</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- FACE API -->
+  <script defer src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.8.0/dist/tf.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+</head>
+
+<body>
+  <div class="efeito-agua">
+  <!-- Coloque quantas bolhas quiser -->
+  <div class="bolha" style="left:5%;  width:10px; height:10px; animation-duration:6s;"></div>
+  <div class="bolha" style="left:15%; width:14px; height:14px; animation-duration:5s;"></div>
+  <div class="bolha" style="left:30%; width:8px;  height:8px;  animation-duration:4s;"></div>
+  <div class="bolha" style="left:50%; width:18px; height:18px; animation-duration:7s;"></div>
+  <div class="bolha" style="left:70%; width:12px; height:12px; animation-duration:5.5s;"></div>
+  <div class="bolha" style="left:85%; width:16px; height:16px; animation-duration:6.2s;"></div>
+</div>
+
+<div class="wrap" id="top">
+
+  <!-- HEADER -->
+  <header>
+    <div class="brand" aria-label="Identificação do projeto">
+      <div class="logo" aria-hidden="true">TG🧜‍♂️</div>
+      <div>
+        <h1>Tritões da Garra — Mistérios das Profundezas</h1>
+        <div class="muted">Projeto - Fundo do Mar • Equipe: Andre, Uencey, Alice, Yasmin</div>
+      </div>
+    </div>
+
+    <nav aria-label="Navegação principal">
+      <a href="#curiosidades">Curiosidades</a>
+      <a href="#fatos">Fatos</a>
+      <a href="#galeria">Galeria</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </header>
+
+  <!-- MAIN -->
+  <main role="main" aria-labelledby="titulo-principal">
+
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="titulo-principal">
+      <div class="hero-text">
+        <h2>Mistérios das Profundezas</h2>
+        <h1 id="titulo-principal">Desvende o que o oceano esconde.</h1>
+
+        <p>
+          O site Mistérios das Profundezas explora o fascinante mundo subaquático,
+          revelando curiosidades, espécies misteriosas e os segredos escondidos nas
+          profundezas do oceano. Uma jornada de descoberta pelo universo marinho. 🌊
+        </p>
+
+        <div class="hero-cta" role="group" aria-label="Ações principais">
+          <button id="abrirIA" class="btn" aria-label="Iniciar reconhecimento facial">Reconhecimento Facial</button>
+          <button id="btnAbrirChatbot" class="btn secondary" aria-label="Abrir chatbot">Abrir Chatbot</button>
+        </div>
+
+        <div class="muted" style="margin-top:12px;">
+          <small><strong>Equipe:</strong> Tritões da Garra 🧜‍♂️ • Andre Macel Lima Farias, 
+          Uencey Roguines de Aquino Mota, Alice Galvão Torres, Yasmin Sousa Guarnieri</small>
+        </div>
+      </div>
+
+      <figure class="hero-visual">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwD55qPQh08JmU8u38XjaARrIq3FmI6Of-1g&s"
+             alt="Visão artística do fundo do mar com criaturas bioluminescentes" />
+        <figcaption class="muted" style="padding:10px; font-size:0.85rem;">
+          Imagem hero: representação das profundezas abissais.
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- GRID PRINCIPAL -->
+    <div class="grid" role="region" aria-label="Conteúdo principal">
+
+      <!-- COLUNA ESQUERDA -->
+      <div class="left">
+
+        <!-- CURIOSIDADES -->
+        <section id="curiosidades" aria-labelledby="h-curiosidades">
+          <h2 id="h-curiosidades">Curiosidades</h2>
+
+          <div class="curiosidades" role="list">
+
+            <article class="curio" role="listitem">
+              <div class="icon" aria-hidden="true">🌊</div>
+              <p>A maior parte do fundo do oceano ainda nunca foi explorada por humanos.</p>
+            </article>
+
+            <article class="curio" role="listitem">
+              <div class="icon" aria-hidden="true">✨</div>
+              <p>Existem criaturas que produzem luz própria, como lulas e peixes abissais.</p>
+            </article>
+
+            <article class="curio" role="listitem">
+              <div class="icon" aria-hidden="true">⚙️</div>
+              <p>A pressão nas profundezas é tão forte que poderia esmagar um submarino comum.</p>
+            </article>
+
+            <article class="curio" role="listitem">
+              <div class="icon" aria-hidden="true">🏔️</div>
+              <p>Algumas espécies do fundo do mar ainda não têm nome científico.</p>
+            </article>
+
+            <article class="curio" role="listitem">
+              <div class="icon" aria-hidden="true">🌑</div>
+              <p>O oceano guarda mais segredos do que a superfície da Lua.</p>
+            </article>
+
+          </div>
+        </section>
+
+        <!-- FATOS -->
+        <section id="fatos" aria-labelledby="h-fatos">
+          <h2 id="h-fatos">Fatos & Ciência</h2>
+
+          <div class="fatos" role="list">
+
+            <article class="card" role="listitem" aria-labelledby="f1">
+              <h3 id="f1">Zona Abissal</h3>
+              <p>A zona abissal começa por volta de 4.000 metros, onde a luz não chega.</p>
+            </article>
+
+            <article class="card" role="listitem" aria-labelledby="f2">
+              <h3 id="f2">Bioluminescência</h3>
+              <p>Animais produzem luz por reações químicas — útil para atrair presas e confundir predadores.</p>
+            </article>
+
+            <article class="card" role="listitem" aria-labelledby="f3">
+              <h3 id="f3">Fontes Hidrotermais</h3>
+              <p>Ecosistemas que sobrevivem sem luz usando quimiossíntese.</p>
+            </article>
+
+          </div>
+        </section>
+
+        <!-- GALERIA -->
+        <section id="galeria" aria-labelledby="h-galeria">
+          <h2 id="h-galeria">Galeria</h2>
+
+          <div class="gallery" role="list">
+
+            <figure role="listitem">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6Oo06RNGWU5eCeQHg9rPnn-Dl1hfc18cTTp1maKQBvvCJbWHT3kivHxI9UZIM4gwsKdk&usqp=CAU"
+                   alt="Formação marinha com corais e peixes">
+              <figcaption>Corais e peixes em águas profundas.</figcaption>
+            </figure>
+
+            <figure role="listitem">
+              <img src="https://s2.glbimg.com/P6RG9_fApPSW6jPk_ay0JDMbsZ4=/620x465/s.glbimg.com/jo/g1/f/original/2016/06/08/cogumelo1.jpg"
+                   alt="Formação geológica subaquática">
+              <figcaption>Montanhas e estruturas submarinas.</figcaption>
+            </figure>
+
+            <figure role="listitem">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwD55qPQh08JmU8u38XjaARrIq3FmI6Of-1g&s"
+                   alt="Criatura bioluminescente">
+              <figcaption>Peixe bioluminescente das profundezas.</figcaption>
+            </figure>
+
+            <figure role="listitem">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQYCjixTNOj6ck-4wNaK3aJFEiGXA5fTNVFw&s"
+                   alt="Imagem da Fossa das Marianas">
+              <figcaption>A Fossa das Marianas.</figcaption>
+            </figure>
+
+          </div>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq" aria-labelledby="h-faq">
+          <h2 id="h-faq">Perguntas Frequentes</h2>
+
+          <div class="faq">
+
+            <details><summary>Qual é a criatura mais profunda do oceano?</summary>
+              <p>Espécies como o peixe-dragão habitam regiões profundas.</p>
+            </details>
+
+            <details><summary>O que é a zona abissal?</summary>
+              <p>Região entre 4.000 e 6.000 metros de profundidade.</p>
+            </details>
+
+            <details><summary>Por que há tanta escuridão no fundo do mar?</summary>
+              <p>A luz solar não passa dos 200 metros.</p>
+            </details>
+
+            <details><summary>As fossas oceânicas são seguras?</summary>
+              <p>Apenas com equipamentos especiais.</p>
+            </details>
+
+            <details><summary>Existe vida na Fossa das Marianas?</summary>
+              <p>Sim, há microrganismos e animais adaptados.</p>
+            </details>
+
+          </div>
+        </section>
+
+        <!-- CTA FINAL -->
+        <div class="cta-final">
+          <div>
+            <strong>Quer saber mais?</strong>
+            <div class="muted">Explore materiais, baixe o PDF do projeto ou continue navegando.</div>
+          </div>
+          <a class="button-like btn" href="#galeria">Aprenda mais</a>
+        </div>
+
+      </div>
+
+      <!-- ASIDE: CRÉDITOS -->
+      <aside aria-label="Créditos e fontes">
+        <div class="aside-card">
+          <h3>Créditos / Fontes</h3>
+
+          <ul class="muted">
+            <li>Imagens: Google Imagens / fontes públicas</li>
+            <li>Informações: materiais didáticos e artigos de oceanografia</li>
+          </ul>
+
+          <h4>Links das imagens</h4>
+          <ol class="muted small">
+            <li>https://encrypted-tbn0...</li>
+            <li>https://s2.glbimg.com...</li>
+            <li>https://encrypted-tbn0...</li>
+            <li>https://encrypted-tbn0...</li>
+          </ol>
+
+          <div class="muted small" style="margin-top:12px;">
+            Útil para identificar autores: Andre, Uencey, Alice, Yasmin.
+          </div>
+        </div>
+      </aside>
+
+    </div>
+
+<!-- MODAL DE RECONHECIMENTO FACIAL -->
+    <div id="cameraModal" class="camera-modal" aria-hidden="true">
+      <div class="camera-modal-content">
+      
+        <button id="fecharModal" class="camera-close" title="Fechar">❌</button>
+        <h2 class="camera-title">Reconhecimento Facial</h2>
+        <div class="camera-video-box">
+          <video id="video" autoplay muted playsinline></video>
+        </div>
+        <div class="camera-controls">
+          <button id="tirarFoto" class="camera-btn">📸 Tirar Foto</button>
+        </div>
+        <p id="modalStatus" class="camera-status">Aguardando...</p>
+        <canvas id="fotoCanvas" style="display:none;"></canvas>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <div>© <span id="anoAtual"></span> Tritões da Garra • Projeto — Fundo do Mar</div>
+      <a href="#top" class="muted" style="text-decoration:none;">Voltar ao topo ↑</a>
+    </footer>
+
+  </main>
+
+  <!-- CHATBOT -->
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+
+    <df-messenger
+      intent="WELCOME"
+      chat-title="Oceandro"
+      agent-id="7e9ea28d-fc2a-4f18-a435-1d31267d9a34"
+      language-code="pt-br">
+    </df-messenger>
+
+</div>
+
+<!-- SCRIPT FINAL -->
+<script src="script.js" defer></script>
+
+</body>
+</html>

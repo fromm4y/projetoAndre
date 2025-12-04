@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Resultado - Exploração do Oceano</title>
+  <style>
+    :root{
+      --bg: #1b1ff7;
+      --card:#04293A;
+      --accent:#0ABDE3;
+      --muted:#9FB4C7;
+      --light:#E6F7FF;
+      --glass: rgba(255,255,255,0.03);
+      --radius:16px;
+      --max-width:1100px;
+      --transition:300ms cubic-bezier(.2,.9,.3,1);
+      color-scheme: dark;
+    }
+
+    .light {
+      --bg:#E9F6FB;
+      --card:#FFFFFF;
+      --accent:#0B7285;
+      --muted:#355070;
+      --light:#06283D;
+      --glass: rgba(0,0,0,0.04);
+      color-scheme: light;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(180deg, var(--bg), #012329 120%);
+      color: var(--light);
+      display: flex;
+      justify-content: center;
+      padding: 24px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.35;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: var(--max-width);
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: var(--accent);
+    }
+
+    h2 {
+      margin: 8px 0;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-top: 0;
+      color: var(--muted);
+    }
+
+    .card {
+      background: var(--card);
+      padding: 20px;
+      border-radius: var(--radius);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      text-align: center;
+    }
+
+    .card img {
+      max-width: 350px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    button {
+      padding: 12px 22px;
+      background: var(--accent);
+      border: none;
+      border-radius: 8px;
+      color: var(--light);
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #0093ba;
+    }
+
+    .back-btn {
+      margin-top: 20px;
+      padding: 12px 22px;
+      background: transparent;
+      color: var(--accent);
+      border: 2px solid var(--accent);
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .back-btn:hover {
+      background: var(--accent);
+      color: var(--light);
+    }
+
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>🌊 Emoção detectada:</h1>
+    <h2 id="emocaoTitle">Processando...</h2>
+    <p id="confTitle"></p>
+
+    <div class="card">
+      <img id="imagemEmocao" alt="Imagem relacionada à emoção" />
+      <button class="back-btn" onclick="voltar()">Voltar</button>
+    </div>
+  </div>
+
+  <script>
+    const imagensPorEmocao = {
+      feliz: [
+        'static/mar_feliz/1.png',
+        'static/mar_feliz/2.png'
+      ],
+      triste: [
+        'static/mar_triste/3.png',
+        'static/mar_triste/4.png'
+      ],
+      neutro: [
+        'static/mar_neutro/5.png',
+        'static/mar_neutro/6.png'
+      ]
+    };
+
+    const traducoes = {
+      happy: 'feliz',
+      sad: 'triste',
+      neutral: 'neutro',
+      angry: 'triste',
+      fearful: 'triste',
+      disgusted: 'triste',
+      surprised: 'feliz'
+    };
+
+    function getQueryParam(name) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(name);
+    }
+
+    function imagemAleatoria(lista) {
+      return lista[Math.floor(Math.random() * lista.length)];
+    }
+
+    const emocaoOriginal = getQueryParam('emocao') || 'neutral';
+    const conf = getQueryParam('conf') || '0';
+    const emocaoTraduzida = traducoes[emocaoOriginal] || 'nenhuma';
+
+    document.getElementById('emocaoTitle').innerText = emocaoTraduzida.charAt(0).toUpperCase() + emocaoTraduzida.slice(1);
+    document.getElementById('confTitle').innerText = `Confiança: ${conf}%`;
+
+    if (imagensPorEmocao[emocaoTraduzida] && imagensPorEmocao[emocaoTraduzida].length > 0) {
+      document.getElementById('imagemEmocao').src = imagemAleatoria(imagensPorEmocao[emocaoTraduzida]);
+    } else {
+      document.getElementById('imagemEmocao').style.display = 'none';
+    }
+
+    function voltar() {
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

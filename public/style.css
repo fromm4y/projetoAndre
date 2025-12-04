@@ -1,0 +1,609 @@
+/* ==================================================
+   Mistérios das Profundezas — style.css (refatorado)
+   ================================================== */
+
+/* ======================
+   VARIÁVEIS
+   ===================== */
+:root{
+  --bg-1: #012433;    /* fundo profundo mais escuro */
+  --bg-2: #014a6b;    /* gradiente intermédio */
+  --accent:#0abde3;
+  --card:#04293a;
+  --muted:#9fb4c7;
+  --light:#e6f7ff;
+  --glass: rgba(255,255,255,0.03);
+  --glass-2: rgba(255,255,255,0.04);
+  --radius:14px;
+  --max-width:1100px;
+  --transition: 220ms cubic-bezier(.2,.9,.3,1);
+  --text-sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color-scheme: dark;
+}
+
+/* modo claro (toggle adiciona .light ao body ou .wrap) */
+.light {
+  --bg-1: #e9f6fb;
+  --bg-2: #d8eef7;
+  --card:#ffffff;
+  --accent:#0b7285;
+  --muted:#355070;
+  --light:#06283d;
+  --glass: rgba(0,0,0,0.04);
+  color-scheme: light;
+}
+
+/* ======================
+   RESET BÁSICO
+   ===================== */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: var(--text-sans);
+  background:linear-gradient(
+  to bottom,
+  #003d66 0%,
+  #004a73 18%,
+  #005f8a 38%,
+  #0073a4 58%,
+  #0088ba 78%,
+  #0099cc 100%
+);
+  color:var(--light);
+  display:flex;
+  justify-content:center;
+  padding:28px;
+  line-height:1.45;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* centraliza e dá espaçamento interno ao conteúdo */
+.wrap{
+  width:100%;
+  max-width:var(--max-width);
+  margin:0 auto;
+  padding:20px;
+}
+
+/* ======================
+   BODY ANIMAÇÃO SUAVE DE BOLHAS (sutil)
+   ===================== */
+body::before,
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:-2;
+  background-repeat:repeat;
+  animation: bolhas 26s linear infinite;
+  opacity:0.06;
+  background-image: radial-gradient(circle 6px, rgba(255,255,255,0.18) 20%, transparent 60%);
+}
+body::after{
+  animation-duration:36s;
+  opacity:0.04;
+  transform:scale(1.6);
+}
+
+@keyframes bolhas {
+  0% { background-position: 0 100%; }
+  100% { background-position: 0 -100%; }
+}
+
+/* ======================
+   LAYOUT GERAL (header / main / footer)
+   ===================== */
+header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:20px;
+  gap:16px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+}
+
+.logo{
+  width:56px;
+  height:56px;
+  border-radius:12px;
+  background: linear-gradient(135deg,var(--accent), rgba(10,189,227,0.18));
+  display:grid;
+  place-items:center;
+  font-weight:700;
+  color:#012a35;
+  box-shadow:0 8px 20px rgba(0,0,0,0.45);
+  flex-shrink:0;
+}
+
+.brand h1{
+  margin:0;
+  font-size:1.05rem;
+  line-height:1.1;
+  color:var(--light);
+  font-weight:700;
+}
+
+.muted{
+  color:var(--muted);
+  font-size:0.9rem;
+}
+
+/* NAV */
+nav{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+nav a{
+  margin-left:6px;
+  color:var(--light);
+  text-decoration:none;
+  opacity:0.95;
+  transition:opacity var(--transition), text-shadow var(--transition);
+  font-weight:600;
+  font-size:0.95rem;
+}
+nav a:hover{
+  opacity:1;
+  text-shadow:0 0 8px rgba(10,189,227,0.18);
+}
+
+/* ======================
+   MAIN / HERO
+   ===================== */
+main{
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  padding:22px;
+  border-radius:var(--radius);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+  backdrop-filter: blur(8px);
+}
+
+/* HERO GRID - controla o espaçamento para evitar colagem de elementos */
+.hero{
+  display:grid;
+  grid-template-columns: 1fr 360px;
+  gap:26px;
+  align-items:center;
+}
+
+/* Textos do hero */
+.hero-text{ position:relative; z-index:1; }
+.hero-text h1, .hero-text h2{
+  margin:0 0 8px 0;
+  color:var(--light);
+  text-wrap: balance;
+}
+.hero-text h1{
+  font-size:2rem;
+  line-height:1.05;
+  text-shadow: 0 6px 16px rgba(0,120,160,0.12);
+}
+.hero-text h2{
+  font-size:1.05rem;
+  font-weight:600;
+  color:var(--accent);
+}
+
+/* parágrafo do hero */
+.hero-text p{
+  margin:14px 0 18px 0;
+  color:var(--muted);
+  max-width:60ch;
+}
+
+/* CTA do hero — evita sobreposição com texto */
+.hero-cta{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  align-items:center;
+  margin-top:6px;
+}
+
+/* BOTÕES */
+.btn{
+  background:var(--accent);
+  color:#012;
+  padding:10px 14px;
+  border:0;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+  transition: transform 220ms ease, box-shadow 220ms ease, opacity 220ms ease;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+}
+.btn.secondary{
+  background:transparent;
+  color:var(--light);
+  border:1px solid rgba(255,255,255,0.06);
+  font-weight:600;
+}
+.btn:focus{ outline:3px solid rgba(10,189,227,0.18); outline-offset:2px; }
+.btn:hover{ transform:translateY(-4px); box-shadow:0 14px 30px rgba(0,0,0,0.38); }
+
+/* garante que botões não invadam o texto e tenham espaçamento */
+.hero-cta .btn{ min-width:150px; }
+
+/* visual hero - imagem */
+.hero-visual{
+  border-radius:12px;
+  overflow:hidden;
+  background:var(--card);
+  box-shadow: inset 0 -18px 36px rgba(0,0,0,0.35);
+  display:flex;
+  flex-direction:column;
+}
+.hero-visual img{
+  width:100%;
+  height:320px;
+  object-fit:cover;
+  display:block;
+}
+
+/* legenda do hero */
+.hero-visual figcaption{
+  padding:10px 12px;
+  font-size:0.85rem;
+  color:var(--muted);
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+}
+
+/* ======================
+   GRID PRINCIPAL (conteúdo e aside)
+   ===================== */
+.grid{
+  margin-top:28px;
+  display:grid;
+  grid-template-columns: 1fr 320px;
+  gap:22px;
+  align-items:start;
+}
+
+/* coluna esquerda (conteúdo principal) */
+.left{
+  min-width:0;
+}
+
+/* ======================
+   CURIOSIDADES
+   ===================== */
+.curiosidades{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap:14px;
+  margin-top:8px;
+}
+
+.curio{
+  background:var(--glass);
+  padding:14px;
+  border-radius:12px;
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  backdrop-filter: blur(4px);
+}
+
+/* ícone da curio */
+.curio .icon{
+  font-size:1.6rem;
+  line-height:1;
+}
+
+/* ======================
+   FATOS / CARDS
+   ===================== */
+.fatos{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.card{
+  background:var(--card);
+  padding:14px;
+  border-radius:12px;
+  box-shadow:0 8px 22px rgba(0,0,0,0.45);
+  flex:1 1 220px;
+  backdrop-filter: blur(6px);
+}
+
+/* ======================
+   GALERIA
+   ===================== */
+.gallery{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:10px;
+  margin-top:12px;
+}
+
+.gallery figure{
+  background:var(--glass);
+  border-radius:10px;
+  overflow:hidden;
+  margin:0;
+  display:flex;
+  flex-direction:column;
+}
+
+.gallery img{
+  width:100%;
+  height:160px;
+  object-fit:cover;
+  display:block;
+  transition: transform var(--transition);
+}
+.gallery img:hover{ transform:scale(1.04); }
+
+/* ======================
+   FAQ
+   ====================== */
+.faq details{
+  background:var(--glass);
+  padding:12px;
+  border-radius:10px;
+  backdrop-filter: blur(6px);
+  margin-top:8px;
+}
+
+/* ======================
+   CTA FINAL
+   ====================== */
+.cta-final{
+  margin-top:18px;
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:space-between;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  padding:12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.03);
+}
+.button-like.btn{
+  text-decoration:none;
+  display:inline-block;
+}
+
+/* ======================
+   ASIDE (CRÉDITOS)
+   ====================== */
+aside .aside-card{
+  background:var(--card);
+  padding:14px;
+  border-radius:12px;
+  box-shadow:0 8px 22px rgba(0,0,0,0.45);
+  color:var(--light);
+}
+
+/* listas pequenas */
+.small{ font-size:0.85rem; color:var(--muted); }
+
+/* ███ MODAL DE RECONHECIMENTO FACIAL ███ */
+
+.camera-modal {
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.35);
+  display: none;
+  align-items: flex-start;     /* <-- JOGA PARA O TOPO */
+  justify-content: center;     /* <-- CENTRALIZA NA HORIZONTAL */
+  padding-top: 20px;           /* <-- UM ESPAÇO BONITO DO TOPO */
+  z-index: 999;
+  transition: opacity var(--transition);
+}
+
+.camera-modal.show {
+  display: flex;
+  opacity: 1;
+}
+
+.camera-modal-content {
+  margin-top: 0;   /* Garantir que não empurre */
+  background: var(--glass);
+  border-radius: var(--radius);
+  padding: 1.6rem;
+  width: 90%;
+  max-width: 460px;
+  box-shadow: 0 18px 40px rgba(2, 35, 50, 0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  animation: modalPop 300ms ease;
+  border: 1px solid rgba(255,255,255,0.25);
+}
+
+@keyframes modalPop {
+  from {
+    opacity: 0;
+    transform: scale(.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.camera-close {
+  align-self: flex-end;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: .3rem;
+  color: var(--muted);
+  transition: opacity var(--transition);
+}
+.camera-close:hover {
+  opacity: .7;
+}
+
+.camera-title {
+  margin: 0;
+  font-size: 1.4rem;
+  color: var(--accent);
+  font-weight: 700;
+  text-align: center;
+}
+
+.camera-video-box {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: .6rem;
+  box-shadow: 0 8px 20px rgba(2,35,50,0.06);
+  display: flex;
+  justify-content: center;
+}
+
+.camera-video-box video {
+  width: 100%;
+  border-radius: var(--radius);
+}
+
+.camera-controls {
+  display: flex;
+  justify-content: center;
+}
+
+.camera-btn {
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  border: 0;
+  padding: .6rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  color: white;
+  font-weight: 700;
+  box-shadow: 0 6px 16px rgba(2,35,50,0.12);
+  transition: transform var(--transition);
+}
+
+.camera-btn:hover {
+  transform: translateY(-2px);
+}
+
+.camera-status {
+  text-align: center;
+  font-weight: 600;
+  color: var(--muted);
+  margin-top: .4rem;
+}
+
+/* ======================
+   FOOTER
+   ====================== */
+footer{
+  margin-top:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  color:var(--muted);
+  font-size:0.95rem;
+}
+
+/* ======================
+   RESPONSIVO
+   ====================== */
+@media (max-width:980px){
+  .hero{ grid-template-columns: 1fr; gap:18px; }
+  .grid{ grid-template-columns: 1fr; }
+  .gallery{ grid-template-columns: repeat(2,1fr); }
+  .hero-visual img{ height:260px; }
+}
+
+@media (max-width:520px){
+  body{ padding:16px; }
+  .hero-visual img{ height:200px; }
+  .gallery img{ height:120px; }
+  .btn{ padding:10px 12px; min-width:120px; font-size:0.95rem; }
+  header{ flex-direction:column; align-items:flex-start; gap:12px; }
+  nav{ width:100%; justify-content:flex-start; }
+}
+
+df-messenger {
+  transform: scale(0);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s ease;
+}
+df-messenger.aberto {
+  transform: scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* =====================================
+   EFEITO DE ÁGUA SUBINDO + BOLHAS
+===================================== */
+
+/* Container geral que cobre toda a tela */
+.efeito-agua {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: -1; /* atrás do conteúdo, mas na frente do fundo */
+}
+
+/* Bolhas */
+.bolha {
+    position: absolute;
+    bottom: -100px;
+    background: rgba(255, 255, 255, 0.35);
+    border-radius: 50%;
+    animation: subirBolha linear infinite;
+    filter: blur(1px);
+}
+
+/* Animação das bolhas subindo */
+@keyframes subirBolha {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-120vh) scale(1.4);
+        opacity: 0;
+    }
+}
+
+/* Camada de 'água' suave balançando */
+.efeito-agua::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(173, 216, 230, 0.15),
+        rgba(255, 255, 255, 0)
+    );
+    animation: ondinha 6s ease-in-out infinite alternate;
+}
+
+/* Animação de água balançando */
+@keyframes ondinha {
+    0% {
+        transform: translateY(5px);
+    }
+    100% {
+        transform: translateY(-5px);
+    }
+}
